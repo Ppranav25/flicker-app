@@ -5,23 +5,20 @@ export default class Classplus extends Component {
 
      updateText= (e)=>{
         let currVal= e.target.value;
+        currVal = currVal.toLowerCase()
         let filteredArr= this.state.pictures.filter((ele)=>{
             return ele.title.toLowerCase().includes(currVal,0);
         })
-           
-           
-        this.setState({display:filteredArr,currText: currVal});
-           
+
+        this.setState({display:filteredArr,currText: currVal})    
      }
      displayResult=()=>{
          let val= this.state.currText;
          let filteredArr= this.state.pictures.filter((ele)=>{
              return ele.title.toLowerCase().includes(val,0);
          })
-            
-            
+
          this.setState({display:filteredArr});
-            
      }
 
      async componentDidMount(){
@@ -33,23 +30,31 @@ export default class Classplus extends Component {
         
     }
     render() {
+        let count = this.state.display.length
+        console.log(count)
         return (
             <div>
                 <nav class="navbar navbar-dark bg-dark">
                     <div class="container-fluid">
-                    <a class="navbar-brand">Serach Here</a>
-                   
+                    <a class="navbar-brand">Search Here</a>
+                    {/* <form class="d-flex"> */}
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={this.updateText}/>
                     <button class="btn btn-outline-success" onClick={this.displayResult}>Search</button>
-                    
+                    {/* </form> */}
                 </div>
                 </nav>
                 {
                     this.state.display.map((pic)=>{
-                        const srcPath=`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}.jpg`;
+                        if(count == 0){
+                            return (<h1>No results found</h1>)
+                        }
+                        else{
+                            const srcPath=`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}.jpg`;
                         return(
-                          <img class="thumbnail img-responsive" alt="images" src={srcPath}></img>
+                          <img class="thumbnail img-responsive" alt="dogs" src={srcPath}></img>
                         )
+                        }
+                        
                     })
                 }
             </div>

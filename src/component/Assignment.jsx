@@ -1,4 +1,6 @@
+import { val } from 'cheerio/lib/api/attributes';
 import React, { Component } from 'react'
+
 
 export default class Classplus extends Component {
     state = { pictures: [], display:[], currText:""}
@@ -14,27 +16,32 @@ export default class Classplus extends Component {
      }
      displayResult=()=>{
          let val= this.state.currText;
-         let filteredArr= this.state.pictures.filter((ele)=>{
-             return ele.title.toLowerCase().includes(val,0);
-         })
-
-         this.setState({display:filteredArr});
-     }
+         this.componentWillMount(val);
+        }
+    
 
      async componentDidMount(){
         let resp= await fetch(" https://www.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=aeafe065ace713b9cedb10b958dfa6a3&format=json&nojsoncallback=1&api_sig=891c234ff88565ed46c43c3dc792b94a");
         let pics= await resp.json();
-        console.log(pics.photos.photo);
-        this.setState({pictures:pics.photos.photo, display:pics.photos.photo});
         
+        this.setState({pictures:pics.photos.photo, display:pics.photos.photo });
         
-    }
+        }
+        async componentWillMount(query){
+            let searchResults= await fetch(` https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=8e9c7f2e239b4eb0480d6c4e2550cc10&tags=${query}&text=${query}&format=json&nojsoncallback=1`);
+            let results= await searchResults.json();
+            
+            this.setState({display:results.photos.photo})  
+            
+        }
+    
+
     render() {
         let count = this.state.display.length
-        console.log(count)
+        
         return (
             <div>
-                <nav class="navbar navbar-dark bg-dark">
+                <nav className="navbar navbar-dark bg-dark">
                     <div class="container-fluid">
                     <a class="navbar-brand">Search Here</a>
                     {/* <form class="d-flex"> */}
@@ -43,6 +50,7 @@ export default class Classplus extends Component {
                     {/* </form> */}
                 </div>
                 </nav>
+                <ul className="imgs">
                 {
                     this.state.display.map((pic)=>{
                         if(count == 0){
@@ -57,7 +65,15 @@ export default class Classplus extends Component {
                         
                     })
                 }
+                </ul>
+
+                
+              
+
+
+
             </div>
         )
     }
 }
+ 

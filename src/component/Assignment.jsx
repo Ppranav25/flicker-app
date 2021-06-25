@@ -1,4 +1,4 @@
-import { val } from 'cheerio/lib/api/attributes';
+
 import React, { Component } from 'react'
 
 
@@ -50,7 +50,7 @@ export default class Classplus extends Component {
                     {/* </form> */}
                 </div>
                 </nav>
-                <ul className="imgs">
+                
                 {
                     this.state.display.map((pic)=>{
                         if(count == 0){
@@ -65,7 +65,7 @@ export default class Classplus extends Component {
                         
                     })
                 }
-                </ul>
+                
 
                 
               

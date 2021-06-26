@@ -21,7 +21,7 @@ export default class Classplus extends Component {
     
 
      async componentDidMount(){
-        let resp= await fetch(" https://www.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=aeafe065ace713b9cedb10b958dfa6a3&format=json&nojsoncallback=1&api_sig=891c234ff88565ed46c43c3dc792b94a");
+        let resp= await fetch(" https://www.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=8e9c7f2e239b4eb0480d6c4e2550cc10&format=json&nojsoncallback=1");
         let pics= await resp.json();
         
         this.setState({pictures:pics.photos.photo, display:pics.photos.photo });
